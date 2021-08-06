@@ -13,9 +13,12 @@ function App() {
       .catch(error => console.log(error))
   }, [])
 
+  const advanceToDoItem = (events) => axios.put()
+  events.target.id
+
   return (
     <div>
-      <KanbanBoard todoItems={todoItems} />
+      <KanbanBoard advanceToDoItem={advanceToDoItem} todoItems={todoItems} />
     </div>
   )
 }
