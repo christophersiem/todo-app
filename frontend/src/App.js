@@ -1,27 +1,31 @@
 import './App.css'
 import KanbanBoard from './components/KanbanBoard'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
+import {useEffect, useState} from 'react'
+import {getAllTodos, putNewTodo} from "./components/service/RequestService";
 
 function App() {
-  const [todoItems, setTodoItems] = useState([])
+    const [todoItems, setTodoItems] = useState([])
 
-  // Todo: new get request after advancing todo
+    useEffect(() => {
+        getAllTodos()
+            .then(response => setTodoItems(response.data))
+            .catch(error => console.error(error))
+    }, [])
 
-  useEffect(() => {
-    axios
-      .get('/api/todo')
-      .then(response => setTodoItems(response.data))
-      .catch(error => console.error(error))
-  }, [])
-
-  const advanceToDoItem = (events) => axios.put("/api/todo/" + events.target.id).catch(error =>console.error(error))
-
-  return (
-    <div>
-      <KanbanBoard advanceToDoItem={advanceToDoItem} todoItems={todoItems} />
-    </div>
-  )
+    const advanceToDoItem = (events) => {
+        putNewTodo(events)
+            .then(() =>
+                getAllTodos()
+                    .then(response => setTodoItems(response.data))
+                    .catch(error => console.error(error))
+            .catch(error => console.error(error))
+        )
+    }
+    return (
+        <div>
+            <KanbanBoard advanceToDoItem={advanceToDoItem} todoItems={todoItems}/>
+        </div>
+    )
 }
 
 export default App
