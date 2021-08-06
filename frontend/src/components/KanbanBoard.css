@@ -1,0 +1,7 @@
+.kanban-board{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    margin: 20px;
+    text-align: center;
+
+}
