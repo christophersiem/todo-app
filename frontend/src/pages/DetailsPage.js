@@ -1,23 +1,17 @@
 import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components/macro'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
 
-export default function DetailsPage() {
+export default function DetailsPage({ todos }) {
   const { id } = useParams()
 
-  const [todo, setTodo] = useState()
+  if (todos.length === 0) {
+    return null
+  }
 
-  useEffect(() => {
-    axios
-      .get(`/api/todo/${id}`)
-      .then(response => response.data)
-      .then(fetchedTodo => setTodo(fetchedTodo))
-      .catch(error => console.error(error))
-  }, [id])
+  const todo = todos.find(todo => todo.id === id)
 
   if (!todo) {
-    return <p>loading</p>
+    return <p>No todo found for id {id}</p>
   }
 
   return (
