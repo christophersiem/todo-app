@@ -57,7 +57,7 @@ export default function App() {
           />
         </Route>
         <Route path="/details/:id">
-          <DetailsPage />
+          <DetailsPage todos={todos} />
         </Route>
         <Route path="/">
           <Redirect to="/" />
